@@ -58,7 +58,7 @@ define(['ko', 'moment', 'countdown'], function (ko, moment, countdown) {
                 'started ' + moment(this.startedAt()).fromNow() :
                 (this.isQueued() ?
                     'not started yet' :
-                    'finished ' + moment(this.finishedAt()).fromNow()
+                    moment(this.finishedAt()).fromNow()
                 );
         }, this);
 
@@ -67,7 +67,7 @@ define(['ko', 'moment', 'countdown'], function (ko, moment, countdown) {
                 'running for ' + countdown(this.startedAt()).toString() :
                 (this.isQueued() ?
                     'queued for ' + countdown(this.startedAt(), this.queuedAt()).toString() :
-                    'ran for ' + countdown(this.startedAt(), this.finishedAt()).toString()
+                    countdown(this.startedAt(), this.finishedAt()).toString()
                 );
         }, this);
 

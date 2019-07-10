@@ -1,12 +1,27 @@
 .list-theme .list-container {
-  font-size: 20pt;
+  font-size: 15pt;
   padding: 30px;
   color: white;
+  font-weight: lighter
+}
+
+.list-theme .part-1 {
+  font-size: 25pt;
+  text-align: left;
+  font-weight: bolder
+}
+
+.list-theme .part-2 {
+  text-align: right;
+}
+
+.list-theme .part-3 {
+  text-align: right;
 }
 
 .list-theme .list-item {
-  margin-top: 15px;
-  padding: 10px;
+  margin-top: 10px;
+  padding: 5px;
 }
 
 .list-theme .clear {
