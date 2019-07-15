@@ -23,6 +23,14 @@ var async = require('async'),
 
                 return 0;
             });
+        } if(sortOrder == "custom"){
+            var serviceOrder = ["timeslot-service", "timeslot-management-service", "service-fee-service", "timeslot-denial-service", "market-information-service", "public-holiday-service"]
+            newBuilds.sort(function (a, b) {
+                if(serviceOrder.findIndex(service => service === a.project) > serviceOrder.findIndex(service => service === b.project)) return 1;
+                if(serviceOrder.findIndex(service => service === a.project) < serviceOrder.findIndex(service => service === b.project)) return -1;
+
+                return 0;
+            });
         }
         else {
             sortBuildsByDate(newBuilds);

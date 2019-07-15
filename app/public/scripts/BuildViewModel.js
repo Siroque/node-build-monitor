@@ -20,11 +20,16 @@ define(['ko', 'moment', 'countdown'], function (ko, moment, countdown) {
         this.hasWarnings = ko.observable();
         this.hasErrors = ko.observable();
         this.url = ko.observable();
+        this.previousBuidStatus = ko.observable();
+        this.previousBuidStatusText = ko.observable();
 
         this.update = function (build) {
             this.id(build.id);
             this.isRunning(build.isRunning);
             this.isQueued(build.isQueued);
+            if(build.project == "timeslot-service"){
+                build.project = "time-slot-service";
+            }
             this.project(build.project);
             this.branch(build.branch);
             this.commit(build.commit);
@@ -40,6 +45,8 @@ define(['ko', 'moment', 'countdown'], function (ko, moment, countdown) {
             this.hasWarnings(build.hasWarnings);
             this.hasErrors(build.hasErrors);
             this.url(build.url);
+            this.previousBuidStatus(build.previousBuidStatus)
+            this.previousBuidStatusText(build.previousBuidStatusText)
         };
 
         this.update(build);
@@ -49,6 +56,15 @@ define(['ko', 'moment', 'countdown'], function (ko, moment, countdown) {
                 return {
                     'color': 'white',
                     'background-color': this.status().toLowerCase()
+                };
+            }
+        }, this);
+
+        this.previousStyle = ko.computed(function () {
+            if (this.status()) {
+                return {
+                    'color': 'white',
+                    'background-color': this.previousBuidStatus().toLowerCase()
                 };
             }
         }, this);
@@ -63,12 +79,15 @@ define(['ko', 'moment', 'countdown'], function (ko, moment, countdown) {
         }, this);
 
         this.duration = ko.forcibleComputed(function () {
-            return this.isRunning() ?
-                'running for ' + countdown(this.startedAt()).toString() :
-                (this.isQueued() ?
-                    'queued for ' + countdown(this.startedAt(), this.queuedAt()).toString() :
-                    countdown(this.startedAt(), this.finishedAt()).toString()
-                );
+            if(this.isRunning()){
+                return 'running for ' + moment().diff(this.startedAt(), 'minutes') + ' min.';
+            } else {
+                if(this.isQueued()){
+                    return 'queued for ' + this.queuedAt().diff(this.startedAt(), 'minutes') + ' min.';
+                }else{
+                    return this.finishedAt().diff(this.startedAt(), 'minutes') + ' min.';
+                }
+            }
         }, this);
 
         this.isMenuAvailable = ko.computed(function () {

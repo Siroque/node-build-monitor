@@ -70,9 +70,42 @@ define(['ko', 'notification', 'BuildViewModel', 'OptionsViewModel'], function (k
         this.loadBuilds = function (builds) {
             self.builds.removeAll();
 
+            var projectMap = {};
+            
             builds.forEach(function (build) {
-                self.builds.push(new BuildViewModel(build));
+                var projectBuildIds = projectMap[build.project]
+                if(projectBuildIds != undefined){
+                    projectBuildIds.push(build)
+                } else {
+                    projectBuildIds = [build];
+                }
+                projectMap[build.project] = projectBuildIds;
             });
+
+            // builds.forEach(function (build) {
+            //     console.log("hiha: " + build.project);
+            //     console.log("hiha2: " + build.id);
+            // });
+
+            Object.keys(projectMap).forEach(function(projectName) {
+                var projectBuilds = projectMap[projectName];
+                
+                projectBuilds.sort((build1, build2) => { 
+                    if(moment(build1.startedAt) > moment(build2.startedAt)){
+                        return 1;
+                    }
+                    if(moment(build1.startedAt) < moment(build2.startedAt)){
+                        return -1;
+                    }
+                    return 0;
+                });
+                var latestBuild = projectBuilds[1];
+                var prevBuild = projectBuilds[0];
+                latestBuild.previousBuidStatus = prevBuild.status;
+                latestBuild.previousBuidStatusText = prevBuild.statusText;
+                
+                self.builds.push(new BuildViewModel(latestBuild));
+            });            
         };
 
         this.updateCurrentBuildsWithChanges = function (changes)  {
