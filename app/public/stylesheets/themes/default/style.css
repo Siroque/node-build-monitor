@@ -6,6 +6,7 @@
 .list-theme {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
+  padding-top: 5px;
 }
 
 .list-theme .header {
@@ -49,7 +50,7 @@
 }
 
 .list-theme .list-item {
-  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 5px;
   display: flex;
   flex-direction: column;
