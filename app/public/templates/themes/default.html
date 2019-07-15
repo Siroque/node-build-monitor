@@ -1,29 +1,32 @@
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 <div class="list-theme">
-  <div class="flex-container" data-bind="foreach: builds">
+  <div data-bind="foreach: builds">
     <div class="list-item" data-bind="{ animateCss: style }">
       <div class="header">
         <span data-bind="text: project().replace(/-/g, ' ').match(/\b(\w)/g).join('').toUpperCase()"></span>
       </div>
-      <div class="middle">
-        <div class="part-2">
-          <span class="fa fa-flag-checkered"></span>
-          <span> </span>
-          <span data-bind="text: time"></span>
-        </div>
-        <div class="part-3">
-          <span class="fa fa-history"></span>
-          <span> </span>
-          <span data-bind="text: duration"></span>
-          <span data-bind="visible: hasWarnings() || hasErrors()">
-            <span> | </span>
-            <span data-bind="visible: hasWarnings" class="fa fa-exclamation-triangle"></span>
+      <div class="middle-and-tail">
+        <div class="middle">
+          <div class="part-2">
+            <span class="fa fa-flag-checkered"></span>
             <span> </span>
-            <span data-bind="visible: hasErrors" class="fa fa-times-circle"></span>
-          </span>
+            <span data-bind="text: time"></span>
+          </div>
+          <div class="part-3">
+            <span class="fa fa-history"></span>
+            <span> </span>
+            <span data-bind="text: duration"></span>
+            <span data-bind="visible: hasWarnings() || hasErrors()">
+              <span> | </span>
+              <span data-bind="visible: hasWarnings" class="fa fa-exclamation-triangle"></span>
+              <span> </span>
+              <span data-bind="visible: hasErrors" class="fa fa-times-circle"></span>
+            </span>
+          </div>
         </div>
-      </div>
-      <div class="tail">
-        <div class="prevStatus" data-bind="{ animateCss: previousStyle }"></div>
+        <div class="tail">
+          <div class="prevStatus" data-bind="{ animateCss: previousStyle }"></div>
+        </div>
       </div>
     </div>
   </div>
